@@ -5,9 +5,9 @@
     </head>
     <body>
         <section class=auth-form>
-            <div class="inner-container login-form">
-                <form action="/admin" method="POST" class="login-form">
-                    <h1>Logowanie</h1>
+            <div class="inner-container signup-form">
+                <form action="/" method="POST" class="signup-form">
+                    <h1>Rejestracja</h1>
                     <div>
                         <p>
                             <label for="name">
@@ -15,13 +15,23 @@
                             </label>
                         </p>
                         <p>
+                            <label for="mail">
+                                adres e-mail: <input type="email" id="mail" name="mail" required>
+                            </label>
+                        </p>
+                        <p>
                             <label for="password">
                                 hasło: <input type="password" id="password" name="password" required>
                             </label>
                         </p>
+                        <p>
+                            <label for="password_confirm">
+                                powtórz hasło: <input type="password" id="password_confirm" name="password_confirm" required>
+                            </label>
+                        </p>
                     </div>
                     <p>
-                        <button type="submit">Zaloguj</button>
+                        <button type="submit">Utwórz konto</button>
                     </p>
                 </form>
             </div>

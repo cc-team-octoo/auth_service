@@ -24,7 +24,12 @@ body {
     display: flex;
 }
 
+.inner-container.signup-form {
+    height: 30em;
+}
+
 form {
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
