@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-const port = 3000
 
 const mongoose = require('mongoose');
 
@@ -11,7 +10,10 @@ mongoose.connect('mongodb+srv://cc-team-octoo:kJHJ8%21iJJhj@cluster0-fxhbq.azure
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+//PORT
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`auth_service app listening on port ${port}...`))
 
 
 
