@@ -4,12 +4,25 @@ const port = 3000
 
 const mongoose = require('mongoose');
 
+// Set the default templating engine to ejs
+app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
+
+// Ustawienia dla plików statycznych (np. css)
+app.use(express.static(__dirname + '/public'));
+
 mongoose.connect('mongodb+srv://cc-team-octoo:kJHJ8%21iJJhj@cluster0-fxhbq.azure.mongodb.net/test?retryWrites=true&w=majority')
                 
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
 app.get('/', (req, res) => res.send('Hello World!'))
+
+app.get('/login', (req, res) => {
+    const title = "Logowanie";
+
+    res.render('pages/login', {title: title});
+});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
