@@ -8,13 +8,13 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 const userSchema = new mongoose.Schema({
   name: String,
-  mail: String,
+  mail: { type: String, unique: true },
   admin: Boolean
 });
 
-const Users = mongoose.model("Users", userSchema);
+const User = mongoose.model("User", userSchema);
 
-const users = new Users({
+const user = new User({
   name: "Mirosław Biedrowski",
   mail: "biedrowski.miroslaw@wp.pl",
   admin: true
