@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
-
 const mongoose = require('mongoose');
+require('dotenv/config');
 
 // Set the default templating engine to ejs
 app.set('view engine', 'ejs');
@@ -9,7 +9,7 @@ app.set('view engine', 'ejs');
 // Ustawienia dla plików statycznych (np. css)
 app.use(express.static(__dirname + '/public'));
 
-mongoose.connect('mongodb+srv://cc-team-octoo:kJHJ8%21iJJhj@cluster0-fxhbq.azure.mongodb.net/test?retryWrites=true&w=majority')                
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, )                
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
