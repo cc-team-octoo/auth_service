@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="pl=PL">
+    <head>
+        <%- include('../partials/head.ejs'); %>
+    </head>
+    <body>
+        <section class=auth-form>
+            <div class="inner-container login-form">
+                <form action="/admin" method="POST" class="login-form">
+                    <h1>Logowanie</h1>
+                    <div>
+                        <%- include('../partials/nameAndPasswordInputs.ejs'); %>
+                    </div>
+                    <p>
+                        <button type="submit">Zaloguj</button>
+                    </p>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>
