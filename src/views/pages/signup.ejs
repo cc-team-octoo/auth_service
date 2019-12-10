@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pl=PL">
+    <head>
+        <%- include('../partials/head.ejs'); %>
+    </head>
+    <body>
+        <section class=auth-form>
+            <div class="inner-container signup-form">
+                <form action="/" method="POST" class="signup-form">
+                    <h1>Rejestracja</h1>
+                    <div>
+                        <%- include('../partials/nameAndPasswordInputs.ejs'); %>
+                        <p>
+                            <label for="password_confirm">
+                                powtórz hasło: <input type="password" id="password_confirm" name="password_confirm" required>
+                            </label>
+                        </p>
+                    </div>
+                    <p>
+                        <button type="submit">Utwórz konto</button>
+                    </p>
+                </form>
+            </div>
+        </section>
+    </body>
+</html>
