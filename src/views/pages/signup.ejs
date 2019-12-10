@@ -9,21 +9,7 @@
                 <form action="/" method="POST" class="signup-form">
                     <h1>Rejestracja</h1>
                     <div>
-                        <p>
-                            <label for="name">
-                                login: <input type="text" id="name" name="name" required>
-                            </label>
-                        </p>
-                        <p>
-                            <label for="mail">
-                                adres e-mail: <input type="email" id="mail" name="mail" required>
-                            </label>
-                        </p>
-                        <p>
-                            <label for="password">
-                                hasło: <input type="password" id="password" name="password" required>
-                            </label>
-                        </p>
+                        <%- include('../partials/nameAndPasswordInputs.ejs'); %>
                         <p>
                             <label for="password_confirm">
                                 powtórz hasło: <input type="password" id="password_confirm" name="password_confirm" required>

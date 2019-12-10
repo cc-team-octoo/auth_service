@@ -20,7 +20,7 @@ mongoose.connect('mongodb+srv://cc-team-octoo:kJHJ8%21iJJhj@cluster0-fxhbq.azure
 
 app.get('/', (req, res) => res.send('Hello World!'))
 
-app.get('/login', (req, res) => {
+app.get('/logowanie', (req, res) => {
     const title = "Logowanie";
     res.render('pages/login', {title: title});
 });
