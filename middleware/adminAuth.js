@@ -2,7 +2,7 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken');
 
 
-function auth(req, res, next) {
+function adminAuth(req, res, next) {
     const token = req.header('x-auth-token');
 
     //check if token
@@ -12,6 +12,9 @@ function auth(req, res, next) {
     try {
         const decoded = jwt.verify(token, process.env.AUTH_KEY); 
         req.user = decoded;
+        //check if admin
+        if (!decoded.admin) return res.status(403).send('Access denied');
+        //continue if admin
         next();
     } 
     //if token not valid catch exception(ex)
@@ -21,4 +24,4 @@ function auth(req, res, next) {
 
 };
 
-module.exports = auth;
+module.exports = adminAuth;
