@@ -23,10 +23,3 @@ const userSchema = new mongoose.Schema(
 );
 
 const User = mongoose.model("User", userSchema);
-
-const user = new User({
-  name: "Mirosław Biedrowski",
-  // mail: "biedrowski.miroslaw@wp.pl",
-  password: "Testowe123!",
-  admin: true
-});
