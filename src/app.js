@@ -1,5 +1,6 @@
-const express = require('express')
-const app = express()
+const express = require("express");
+const app = express();
+const port = 3000;
 
 const mongoose = require('mongoose');
 
@@ -13,9 +14,28 @@ mongoose.connect('mongodb+srv://cc-team-octoo:kJHJ8%21iJJhj@cluster0-fxhbq.azure
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
+app.get("/", (req, res) => res.send("Hello World!"));
 
-app.get('/', (req, res) => res.send('Hello World!'))
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
+const userSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      unique: true,
+      required: true,
+      minlength: 5,
+      maxlength: 50
+    },
+    // mail: { type: String, unique: true, required: true },
+    password: { type: String, required: true, minlength: 6, maxlength: 100 },
+    admin: Boolean
+  },
+  { timestamps: { createdAt: "created_at" } }
+);
+
+const User = mongoose.model("User", userSchema);
+ 
 app.get('/logowanie', (req, res) => {
     const title = "Logowanie";
     res.render('pages/login', {title: title});
