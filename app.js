@@ -9,7 +9,7 @@ app.set('view engine', 'ejs');
 // Ustawienia dla plików statycznych (np. css)
 app.use(express.static(__dirname + '/public'));
 
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, )                
+mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true },  )                
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
