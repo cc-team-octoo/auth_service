@@ -4,16 +4,16 @@
         <%- include('../partials/head.ejs'); %>
     </head>
     <body>
-        <a href="/" class="back-to-index-page">Wróć do strony głównej</a>
+        <a href="/" class="back-to-index-page">Return</a>
         <section class=auth-form>
             <div class="inner-container login-form">
                 <form action="/admin" method="POST" class="login-form">
-                    <h1>Logowanie</h1>
+                    <h1>Log in</h1>
                     <div>
                         <%- include('../partials/nameAndPasswordInputs.ejs'); %>
                     </div>
                     <p>
-                        <button type="submit">Zaloguj</button>
+                        <button type="submit">Log in</button>
                     </p>
                 </form>
             </div>
