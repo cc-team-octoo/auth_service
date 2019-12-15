@@ -13,16 +13,18 @@ mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, )
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
-app.get("/", (req, res) => res.send("Hello World!"));
+app.get("/", (req, res) => {
+    const title = "AUTH-APLICATION";
+    res.render('pages/index', {title: title})
+});
 
- 
-app.get('/logowanie', (req, res) => {
-    const title = "Logowanie";
+app.get('/login', (req, res) => {
+    const title = "Log in";
     res.render('pages/login', {title: title});
 });
 
-app.get('/rejestracja', (req, res) => {
-    const title = "Rejestracja";
+app.get('/signup', (req, res) => {
+    const title = "Sign up";
     res.render('pages/signup', {title: title});
 });
 
