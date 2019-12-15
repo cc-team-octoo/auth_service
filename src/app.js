@@ -14,8 +14,6 @@ mongoose.connect('mongodb+srv://cc-team-octoo:kJHJ8%21iJJhj@cluster0-fxhbq.azure
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
-app.get("/", (req, res) => res.send("Hello World!"));
-
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 const userSchema = new mongoose.Schema(
@@ -35,7 +33,12 @@ const userSchema = new mongoose.Schema(
 );
 
 const User = mongoose.model("User", userSchema);
- 
+
+app.get("/", (req, res) => {
+    const title = "AUTH-APLICATION";
+    res.render('pages/index', {title: title})
+});
+
 app.get('/logowanie', (req, res) => {
     const title = "Logowanie";
     res.render('pages/login', {title: title});
@@ -47,5 +50,5 @@ app.get('/rejestracja', (req, res) => {
 });
 
 //PORT listening
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`auth_service app listening on port ${port}...`))
+// const port = process.env.PORT || 3000;
+// app.listen(port, () => console.log(`auth_service app listening on port ${port}...`))
