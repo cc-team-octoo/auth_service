@@ -43,7 +43,11 @@ body {
     height: 24em;
 }
 
-form {
+.inner-container.index-page {
+    height: 27em;
+}
+
+form, .content-container {
     height: 100%;
     width: 100%;
     display: flex;
@@ -52,6 +56,36 @@ form {
     align-items: center;
     background-color: hsl(4, 7%, 24%);
     border-radius: 1%;
+}
+
+.header {
+    text-align: center;
+}
+
+.list-container {
+    text-align: center;
+}
+
+.list-container ul {
+    padding-inline-start: 0;
+}
+
+.list-container li {
+    display: inline-block;
+    text-decoration: none;
+    margin: 1rem;
+    width: 90%;
+    /* border: solid white 1px; */
+}
+
+.list-container li a {
+    text-decoration: none;
+    color: white;
+}
+
+.list-container li button{
+    width: 90%;
+    height: 3em;
 }
 
 form div {
