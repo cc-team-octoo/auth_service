@@ -1,22 +1,25 @@
 <!DOCTYPE html>
 <html lang="pl=PL">
-    <head>
-        <%- include('../partials/head.ejs'); %>
-    </head>
-    <body>
-        <a href="/" class="back-to-index-page">Return</a>
-        <section class=auth-form>
-            <div class="inner-container login-form">
-                <form action="/admin" method="POST" class="login-form">
-                    <h1>Log in</h1>
-                    <div>
-                        <%- include('../partials/nameAndPasswordInputs.ejs'); %>
-                    </div>
-                    <p>
-                        <button type="submit">Log in</button>
-                    </p>
-                </form>
-            </div>
-        </section>
-    </body>
+
+<head>
+    <%- include('../partials/head.ejs'); %>
+</head>
+
+<body>
+    <a href="/" class="back-to-index-page">Return</a>
+    <section class=auth-form>
+        <div class="inner-container login-form">
+            <form action="/login" method="POST" class="login-form">
+                <h1>Log in</h1>
+                <div>
+                    <%- include('../partials/nameAndPasswordInputs.ejs'); %>
+                </div>
+                <p>
+                    <button type="submit">Log in</button>
+                </p>
+            </form>
+        </div>
+    </section>
+</body>
+
 </html>

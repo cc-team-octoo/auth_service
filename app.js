@@ -5,6 +5,7 @@ const Joi = require("joi")
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken")
 const config = require("config")
+const bodyParser = require('body-parser');
 require('dotenv/config');
 const User = require('./models/user-model')
 if (config.get("jwtPrivateKey")) {
@@ -12,7 +13,9 @@ if (config.get("jwtPrivateKey")) {
 }
 // Set the default templating engine to ejs
 app.set('view engine', 'ejs');
-
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 // Ustawienia dla plików statycznych (np. css)
 app.use(express.static(__dirname + '/public'));
 
@@ -48,21 +51,25 @@ app.get('/admin', async (req, res) => {
     res.render('pages/admin', {
         title: title
     })
+    userList.forEach((e) => {
+        console.log(e)
+    })
     res.send(userList)
 });
 
 
 app.post('/register', async (req, res) => {
+    console.log(req.body)
     const schema = {
         name: Joi.string().min(5).max(50).required(),
         password: Joi.string().min(6).max(100).required(),
-        confirmPassword: Joi.string().min(6).max(100).required(),
+        password_confirm: Joi.string().min(6).max(100).required(),
     }
     const result = Joi.validate(req.body, schema);
     if (result.error) {
         return res.status(400).send(result.error.details[0].message)
     };
-    if (password !== confirmPassword) {
+    if (req.body.password !== req.body.password_confirm) {
         return res.status(400).send("Password must be the same.")
     }
     let user = await User.findOne({
@@ -82,23 +89,23 @@ app.post('/register', async (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-    const result = Joi.validate(req.body, schema);
     const schema = {
         name: Joi.string().min(5).max(50).required(),
         password: Joi.string().min(6).max(100).required(),
     }
+    const result = Joi.validate(req.body, schema);
     if (result.error) {
         return res.status(400).send(result.error.details[0].message)
     };
     let user = await User.findOne({
         name: req.body.name
     })
-    if (user) {
-        return res.status(400).send("invalid user Name or password")
+    if (!user) {
+        return res.status(400).send("invalid user Nameeee or password")
     }
     const validPassword = bcrypt.compare(req.body.password, user.password)
     if (!validPassword) {
-        return res.status(400).send("invalid user Name or password")
+        return res.status(400).send("invalid user Name or passworddddd")
     }
     const token = jwt.sign({
         _id: user._id
