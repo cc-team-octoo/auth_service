@@ -11,10 +11,13 @@ const authCheck = (req, res, next) => {
     }
 };
 
-router.get('/', authCheck, (req, res) => {
+router.get('/', authCheck, async (req, res) => {
     const title = "Your profile";
-    res.render('pages/profile', {title: user}, { name: req.user });
+    const user = await User.findById(req.user.id)
+    res.render('pages/profile', {title: title});
     res.send(user)
 });
+
+
 
 module.exports = router;
