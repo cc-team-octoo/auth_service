@@ -3,14 +3,12 @@ const app = express();
 const mongoose = require('mongoose');
 const Joi = require("joi")
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken")
-const config = require("config")
+const jwt = require("jsonwebtoken");
+const config = require("config");
 const bodyParser = require('body-parser');
+const auth = require("./middleware/auth")
 require('dotenv/config');
 const User = require('./models/user-model')
-if (config.get("jwtPrivateKey")) {
-    console.log("eror token not defined")
-}
 // Set the default templating engine to ejs
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
@@ -45,20 +43,19 @@ app.get('/signup', (req, res) => {
         title: title
     });
 });
-app.get('/admin', async (req, res) => {
+app.get('/admin', auth, async (req, res) => {
     const title = "Sign up";
+    const user = await User.findById(req.user.id).select("-password")
     const userList = await User.find();
     res.render('pages/admin', {
-        title: title
-    })
-    userList.forEach((e) => {
-        console.log(e)
+        title: title,
+        userList: userList
     })
     res.send(userList)
 });
 
 
-app.post('/register', async (req, res) => {
+app.post('/signup', async (req, res) => {
     console.log(req.body)
     const schema = {
         name: Joi.string().min(5).max(50).required(),
@@ -85,7 +82,11 @@ app.post('/register', async (req, res) => {
     const salt = await bcrypt.genSalt(10)
     user.password = await bcrypt.hash(user.password, salt)
     user = await user.save()
-    res.send(user)
+    const token = jwt.sign({
+        _id: user.id
+    }, config.get("jwtPrivateKey"));
+    res.header("x-auth-token", token).send(user)
+    console.log(res)
 });
 
 app.post('/login', async (req, res) => {
@@ -103,19 +104,45 @@ app.post('/login', async (req, res) => {
     if (!user) {
         return res.status(400).send("invalid user Nameeee or password")
     }
-    const validPassword = bcrypt.compare(req.body.password, user.password)
+    const validPassword = await bcrypt.compare(req.body.password, user.password)
     if (!validPassword) {
         return res.status(400).send("invalid user Name or passworddddd")
     }
+
     const token = jwt.sign({
-        _id: user._id
+        _id: user.id
     }, config.get("jwtPrivateKey"));
-    res.send(token)
+    res.header("x-auth-token", token)
+    const title = "Sign up";
+    const userName = user.name;
+    const userList = await User.find();
+    res.render('pages/admin', {
+        title: title,
+        userList: userList,
+        userName: userName || "Admin",
+    }).send(token)
+
 });
-app.delete('user/:id', async (req, res) => {
+
+app.put("/user/:id", auth, (req, res) => {
+    const condition = {
+        id: req.params.id
+    };
+
+    User.update(condition, req.body)
+        .then(doc => {
+            if (!doc) {
+                return res.status(404).end();
+            }
+            return res.status(200).json(doc);
+        })
+        .catch(err => next(err));
+});
+
+app.delete('user/:id', auth, async (req, res) => {
     const user = await User.findByIdAndRemove(req.params.id)
     if (!user) return res.status(404).send("Cannot find user")
-    res.send(user)
+    resres.send(user)
 });
 //PORT listening
 const port = process.env.PORT || 8000;

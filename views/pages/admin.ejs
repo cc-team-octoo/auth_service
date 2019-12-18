@@ -10,13 +10,15 @@
     <section class=auth-form>
         <div class="inner-container signup-form admin-container">
             <div class="admin-header">
-                <h2>Admin Page</h2>
+                <h2>Witaj <%= userName %> </%=>
+                </h2>
                 <h3>Users List</h3>
             </div>
             <div class="user-List">
                 <ul>
-                    <li>Example user</li>
-                    <li>Example User</li>
+                    <% for (var i = 0; i < userList.length; i++) { %>
+                    <li> <%= userList[i].name %> </%=>
+                        <% } %>
                 </ul>
             </div>
             <button>Log out</button>
