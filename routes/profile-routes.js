@@ -13,7 +13,8 @@ const authCheck = (req, res, next) => {
 
 router.get('/', authCheck, (req, res) => {
     const title = "Your profile";
-    res.render('pages/profile', {title: title});
+    res.render('pages/profile', {title: user}, { name: req.user });
+    res.send(user)
 });
 
 module.exports = router;
