@@ -3,14 +3,19 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const auth = require('./middleware/auth');
+const passportSetup = require('./config/passport-setup');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
 require('dotenv/config');
 
 const User = require('./models/user-model')
 
 const main = require('./routes/main');
 const login = require('./routes/login');
-const signup = require('./routes/signup')
-const admin = require('./routes/admin')
+const signup = require('./routes/signup');
+const admin = require('./routes/admin');
+const authRoutes = require('./routes/auth-routes');
+const profileRoutes = require('./routes/profile-routes');
 
 
 // set the default templating engine to ejs
@@ -24,6 +29,16 @@ app.use(bodyParser.urlencoded({
 // set up for static files like css
 app.use(express.static(__dirname + '/public'));
 
+// cookie
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY]
+}));
+
+// initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
+
 //database connection
 mongoose.connect(process.env.DB_CONNECTION, {
         useNewUrlParser: true
@@ -34,8 +49,10 @@ mongoose.connect(process.env.DB_CONNECTION, {
 //use routes
 app.use('/', main);
 app.use('/login', login);
-app.use('/signup', signup)
-app.use('/admin', admin)
+app.use('/signup', signup);
+app.use('/admin', admin);
+app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
 
 app.put("/user/:id", auth, (req, res) => {
