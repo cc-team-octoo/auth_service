@@ -135,3 +135,18 @@ button:hover {
     justify-content: center;
     align-items: center;
 }
+
+/*profile*/
+form, .content-container-profile {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: hsl(4, 7%, 24%);
+    border-radius: 1%;
+}
+
+.header-profile {
+    text-align: center;
+    padding: 20px 0;
+}

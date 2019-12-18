@@ -4,23 +4,18 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   name: {
     type: String,
-    unique: true,
-    required: true,
     minlength: 5,
     maxlength: 50
   },
-  // email: { type: String, unique: true, required: true },
   password: {
     type: String,
-    required: true,
     minlength: 6,
     maxlength: 100
   },
-  admin: Boolean
-}, {
-  timestamps: {
-    createdAt: "created_at"
-  }
+  admin: Boolean,
+  date: { type: Date, default: Date.now },
+  googleId: String
+
 });
 
 const User = mongoose.model('user', userSchema);
