@@ -1,33 +1,64 @@
 const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const auth = require('./middleware/auth');
 require('dotenv/config');
 
-// Set the default templating engine to ejs
+const User = require('./models/user-model')
+
+const main = require('./routes/main');
+const login = require('./routes/login');
+const signup = require('./routes/signup')
+const admin = require('./routes/admin')
+
+
+// set the default templating engine to ejs
 app.set('view engine', 'ejs');
 
-// Ustawienia dla plików statycznych (np. css)
+//set up body parser to read request's body
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
+
+// set up for static files like css
 app.use(express.static(__dirname + '/public'));
 
-mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true }, )                
+//database connection
+mongoose.connect(process.env.DB_CONNECTION, {
+        useNewUrlParser: true
+    }, )
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
-app.get("/", (req, res) => {
-    const title = "AUTH-APLICATION";
-    res.render('pages/index', {title: title})
+//use routes
+app.use('/', main);
+app.use('/login', login);
+app.use('/signup', signup)
+app.use('/admin', admin)
+
+
+app.put("/user/:id", auth, (req, res) => {
+    const condition = {
+        id: req.params.id
+    };
+
+    User.update(condition, req.body)
+        .then(doc => {
+            if (!doc) {
+                return res.status(404).end();
+            }
+            return res.status(200).json(doc);
+        })
+        .catch(err => next(err));
 });
 
-app.get('/login', (req, res) => {
-    const title = "Log in";
-    res.render('pages/login', {title: title});
-});
-
-app.get('/signup', (req, res) => {
-    const title = "Sign up";
-    res.render('pages/signup', {title: title});
+app.delete('user/:id', auth, async (req, res) => {
+    const user = await User.findByIdAndRemove(req.params.id)
+    if (!user) return res.status(404).send("Cannot find user")
+    res.send(user)
 });
 
 //PORT listening
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`auth_service app listening on port ${port}...`))
