@@ -8,6 +8,10 @@ const cookieSession = require('cookie-session');
 const passport = require('passport');
 require('dotenv/config');
 
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
+
 const User = require('./models/user-model')
 
 const main = require('./routes/main');
@@ -25,6 +29,8 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+app.use(cors());
+app.use(cookieParser());
 
 // set up for static files like css
 app.use(express.static(__dirname + '/public'));

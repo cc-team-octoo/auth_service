@@ -41,9 +41,27 @@ router.post('/', async (req, res) => {
     user = await user.save()
     const token = jwt.sign({
         _id: user.id
-    }, config.get("jwtPrivateKey"));
-    res.header("x-auth-token", token).send(user)
-    console.log(res)
+    }, config.get("jwtPrivateKey"))
+    
+    // res.redirect('/admin')
+    
+    res.cookie('token', token, {
+        expires: new Date(Date.now() + 1000),
+        secure: false, // set to true if your using https
+        httpOnly: false,
+    }).redirect('/admin')
+
+    //   const title = "Sign up";
+    //   const userName = user.name;
+    //   const userList = await User.find();
+    //   res.render('pages/admin', {
+    //       title: title,
+    //       userList: userList,
+    //       userName: userName || "Admin",
+    //   })
+
+    // res.header("x-auth-token", token).auth().send('done')
+    
 });
 
 module.exports = router;
