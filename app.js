@@ -14,6 +14,7 @@ const User = require('./models/user-model')
 
 const main = require('./routes/main');
 const login = require('./routes/login');
+const logout = require('./routes/logout')
 const signup = require('./routes/signup');
 const admin = require('./routes/admin');
 const authRoutes = require('./routes/auth-routes');
@@ -53,6 +54,7 @@ mongoose.connect(process.env.DB_CONNECTION, {
 //use routes
 app.use('/', main);
 app.use('/login', login);
+app.use('/logout', logout);
 app.use('/signup', signup);
 app.use('/admin', admin);
 app.use('/auth', authRoutes);
