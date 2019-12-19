@@ -33,7 +33,8 @@ router.post('/', async (req, res) => {
 
     //generate token
     const token = jwt.sign({
-        _id: user.id
+        _id: user.id,
+        name: user.name
     }, config.get("jwtPrivateKey"));
 
     //send token in cookies
