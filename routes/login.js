@@ -31,19 +31,17 @@ router.post('/', async (req, res) => {
         return res.status(400).send("invalid user Name or passworddddd")
     }
 
+    //generate token
     const token = jwt.sign({
         _id: user.id
     }, config.get("jwtPrivateKey"));
-    res.header("x-auth-token", token)
-    const title = "Sign up";
-    const userName = user.name;
-    const userList = await User.find();
-    res.render('pages/admin', {
-        title: title,
-        userList: userList,
-        userName: userName || "Admin",
-    }).send(token)
 
+    //send token in cookies
+    res.cookie('token', token, {
+        expires: new Date(Date.now() + 100),
+        secure: false, // set to true if your using https
+        httpOnly: true,
+    }).redirect('/admin')
 });
 
 module.exports = router;
