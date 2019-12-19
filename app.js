@@ -55,6 +55,7 @@ app.use('/signup', signup);
 app.use('/admin', admin);
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
+app.use('/logout', authRoutes);
 
 
 app.put("/user/:id", auth, (req, res) => {
