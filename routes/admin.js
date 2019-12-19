@@ -5,10 +5,9 @@ const User = require('../models/user-model');
 
 router.get('/', auth, async (req, res) => {
     const title = "Admin Page";
-    const user = await User.findById(req.user.id).select("-password")
+    const userName = req.user.name;
     const userList = await User.find();
-    res.render('pages/admin', { title, userList })
-    res.send(userList)
+    res.render('pages/admin', { title, userList, userName })
 });
 
 module.exports = router;

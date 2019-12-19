@@ -6,7 +6,6 @@ const jwt = require("jsonwebtoken");
 const config = require("config");
 const User = require('../models/user-model');
 
-
 router.get('/', (req, res) => {
     const title = "Sign up";
     res.render('pages/signup', { title });
@@ -36,14 +35,24 @@ router.post('/', async (req, res) => {
         name: req.body.name,
         password: req.body.password,
     });
+    
+    //hash password and save user in db
     const salt = await bcrypt.genSalt(10)
     user.password = await bcrypt.hash(user.password, salt)
     user = await user.save()
+
+    //generate token
     const token = jwt.sign({
-        _id: user.id
-    }, config.get("jwtPrivateKey"));
-    res.header("x-auth-token", token).send(user)
-    console.log(res)
+        _id: user.id,
+        name: user.name
+    }, config.get("jwtPrivateKey"))
+    
+    //send token in cookies
+    res.cookie('token', token, {
+        expires: new Date(Date.now() + 1000),
+        secure: false, // set to true if your using https
+        httpOnly: true,
+    }).redirect('/admin')   
 });
 
 module.exports = router;

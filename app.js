@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
 const auth = require('./middleware/auth');
 const passportSetup = require('./config/passport-setup');
 const cookieSession = require('cookie-session');
@@ -21,10 +23,10 @@ const profileRoutes = require('./routes/profile-routes');
 // set the default templating engine to ejs
 app.set('view engine', 'ejs');
 
-//set up body parser to read request's body
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
+//set up body parser to read request's body and cookies
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
+app.use(cookieParser());
 
 // set up for static files like css
 app.use(express.static(__dirname + '/public'));
@@ -55,7 +57,6 @@ app.use('/signup', signup);
 app.use('/admin', admin);
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
-
 
 app.put("/user/:id", auth, (req, res) => {
     const condition = {
