@@ -12,7 +12,7 @@ require('dotenv/config');
 
 const main = require('./routes/main');
 const login = require('./routes/login');
-const logout = require('./routes/logout')
+const logout = require('./routes/logout');
 const signup = require('./routes/signup');
 const admin = require('./routes/admin');
 const authRoutes = require('./routes/auth-routes');
@@ -49,7 +49,7 @@ mongoose.connect(process.env.DB_CONNECTION, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
-    }, )
+    })
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
 
@@ -62,8 +62,8 @@ app.use('/signup', signup);
 app.use('/admin', admin);
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
-app.use('/users', users)
+app.use('/users', users);
 
 //PORT listening
 const port = process.env.PORT || 8000;
-app.listen(port, () => console.log(`auth_service app listening on port ${port}...`))
+app.listen(port, () => console.log(`auth_service app listening on port ${port}...`));
