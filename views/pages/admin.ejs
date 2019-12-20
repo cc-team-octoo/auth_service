@@ -22,10 +22,12 @@
                             <input type="text" id="name" name="name" placeholder="name" />
                             <button type="submit" class="btn-user">Edit</button>
                         </form>
-                        <form action="/user/<%= userList[i]._id %>?_method=DELETE" method="POST">
-                            <button type="submit" class="btn-user">Remove</button>
-                        </form>
-                        <% } %>
+                        <% if (`${userList[i]._id}` !== userId) { %>
+                            <form action="/user/<%= userList[i]._id %>?_method=DELETE" method="POST">
+                                <button type="submit" class="btn-user">Remove</button>
+                            </form>
+                       <% } %>
+                    <% } %>
                 </ul>
             </div>
             <a href="/logout"><button>Log out</button></a>
