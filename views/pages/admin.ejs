@@ -14,7 +14,7 @@
                 </h2>
                 <h3>Users in our database:</h3>
             </div>
-            <div lass="list-container">
+            <div class="user-list-container">
                 <ul class="user-List">
                     <% for (let i = 0; i < userList.length; i++) { %>
                     <li class="user-list-item"> <%= userList[i].name %> </%=>
@@ -23,13 +23,13 @@
                             <button type="submit" class="btn-user">Edit</button>
                         </form>
                         <% if (`${userList[i]._id}` !== userId) { %>
-                            <form action="/user/<%= userList[i]._id %>?_method=DELETE" method="POST">
-                                <button type="submit" class="btn-user">Remove</button>
-                            </form>
-                       <% } %>
-                    <% } %>
-                </ul class="user-List>
-            </div c>
+                        <form action="/user/<%= userList[i]._id %>?_method=DELETE" method="POST">
+                            <button type="submit" class="btn-user">Remove</button>
+                        </form>
+                        <% } %>
+                        <% } %>
+                </ul>
+            </div>
             <a href="/logout"><button>Log out</button></a>
         </div>
         </div>

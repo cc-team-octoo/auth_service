@@ -24,7 +24,9 @@ const users = require('./routes/users');
 app.set('view engine', 'ejs');
 
 //set up body parser to read request's body and cookies
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(cors());
 app.use(cookieParser());
 
