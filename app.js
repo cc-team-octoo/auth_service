@@ -10,8 +10,6 @@ const passport = require('passport');
 const methodOverride = require('method-override');
 require('dotenv/config');
 
-const User = require('./models/user-model')
-
 const main = require('./routes/main');
 const login = require('./routes/login');
 const logout = require('./routes/logout')

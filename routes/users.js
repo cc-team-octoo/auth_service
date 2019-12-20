@@ -3,6 +3,8 @@ const router = express.Router();
 const Joi = require("joi");
 const auth = require('../middleware/auth');
 
+const User = require('./models/user-model');
+
 
 router.put("/:id", auth, async (req, res) => {
     const schema = { name: Joi.string().min(5).max(50).required() };
