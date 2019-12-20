@@ -102,6 +102,11 @@ form p input {
   font-size: 1.3rem;
 }
 
+.edit-form {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
 button {
   background-color: white;
   border: solid white 2px;
