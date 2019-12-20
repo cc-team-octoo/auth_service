@@ -8,6 +8,7 @@ const auth = require('./middleware/auth');
 const passportSetup = require('./config/passport-setup');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const Joi = require("joi");
 const methodOverride = require('method-override');
 require('dotenv/config');
 
@@ -64,19 +65,21 @@ app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
 
 
-app.put("/user/:id", auth, (req, res) => {
-    const condition = {
-        id: req.params.id
+app.put("/user/:id", auth, async (req, res) => {
+    const schema = {
+        name: Joi.string().min(5).max(50).required(),
+    }
+    const result = Joi.validate(req.body, schema);
+    if (result.error) {
+        return res.status(400).send(result.error.details[0].message)
     };
-
-    User.update(condition, req.body)
-        .then(doc => {
-            if (!doc) {
-                return res.status(404).end();
-            }
-            return res.status(200).json(doc);
-        })
-        .catch(err => next(err));
+    const user = await User.findByIdAndUpdate(req.params.id, {
+        name: req.body.name
+    }, {
+        new: true
+    });
+    if (!user) return res.status(404).send("Cannot find user");
+    res.redirect("/admin");
 });
 
 app.delete('/user/:id', auth, async (req, res) => {

@@ -18,7 +18,10 @@
                 <ul>
                     <% for (let i = 0; i < userList.length; i++) { %>
                     <li> <%= userList[i].name %> </%=>
-                        <button type="button" class="btn-user"><a href="#">Edit</a></button>
+                        <form action="/user/<%= userList[i]._id %>?_method=PUT" method="POST">
+                            <input type="text" id="name" name="name" placeholder="name" />
+                            <button type="submit" class="btn-user">Edit</button>
+                        </form>
                         <form action="/user/<%= userList[i]._id %>?_method=DELETE" method="POST">
                             <button type="submit" class="btn-user">Remove</button>
                         </form>
