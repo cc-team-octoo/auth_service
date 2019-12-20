@@ -62,7 +62,7 @@ app.use('/signup', signup);
 app.use('/admin', admin);
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
-app.use('/users', users);
+app.use('/user', users);
 
 //PORT listening
 const port = process.env.PORT || 8000;
