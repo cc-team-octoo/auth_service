@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
 
     //send token in cookies
     res.cookie('token', token, {
-        expires: new Date(Date.now() + 1000),
+        expires: new Date(Date.now() + 300000),
         secure: false, // set to true if your using https
         httpOnly: true,
     }).redirect('/admin')
