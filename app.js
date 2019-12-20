@@ -76,9 +76,10 @@ app.put("/user/:id", auth, (req, res) => {
 });
 
 app.get('/user/:id', auth, async (req, res) => {
+    const user = await User.findById(req.params.id);
     // const user = await User.findByIdAndRemove(req.params.id);
     // if (!user) return res.status(404).send("Cannot find user");
-    res.send(req.user);
+    res.send(user);
 });
 
 //PORT listening
