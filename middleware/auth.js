@@ -9,9 +9,10 @@ async function auth(req, res, next) {
         }
         const decrypt = await jwt.verify(token, config.get("jwtPrivateKey"));
         req.user = {
-            id: decrypt.id,
+            id: decrypt._id,
             name: decrypt.name,
         };
+        console.log(`auth id: ${req.user.id}`)
         next();
         } catch (err) {
             return res.status(500).json(err.toString());

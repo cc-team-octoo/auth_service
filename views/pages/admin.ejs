@@ -19,7 +19,7 @@
                     <% for (let i = 0; i < userList.length; i++) { %>
                         <li> <%= userList[i].name %> </%=>
                         <button type="button" class="btn-user"><a href="#">Edit</a></button>
-                        <button type="button" class="btn-user"><a href="#">Remove</a></button>
+                        <button type="button" class="btn-user"><a href="/user/<%= userId %>" method="DELETE">Remove</a></button>
                     <% } %>
                 </ul>
             </div>
