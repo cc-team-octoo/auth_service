@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const User = require('../models/user-model');
 
+
 router.get('/', auth, async (req, res) => {
     const token = req.cookies.token || '';
     const title = "Admin Page";

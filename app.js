@@ -8,6 +8,7 @@ const auth = require('./middleware/auth');
 const passportSetup = require('./config/passport-setup');
 const cookieSession = require('cookie-session');
 const passport = require('passport');
+const methodOverride = require('method-override');
 require('dotenv/config');
 
 const User = require('./models/user-model')
@@ -25,7 +26,9 @@ const profileRoutes = require('./routes/profile-routes');
 app.set('view engine', 'ejs');
 
 //set up body parser to read request's body and cookies
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 app.use(cors());
 app.use(cookieParser());
 
@@ -44,13 +47,13 @@ app.use(passport.session());
 
 //database connection
 mongoose.connect(process.env.DB_CONNECTION, {
-        useNewUrlParser: true, 
-        useUnifiedTopology: true, 
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
         useCreateIndex: true
     }, )
     .then(() => console.log('Connected to MongoDB...'))
     .catch(err => console.error('Could not connect to MongoDB...', err));
-
+app.use(methodOverride('_method'));
 //use routes
 app.use('/', main);
 app.use('/login', login);
@@ -59,6 +62,7 @@ app.use('/signup', signup);
 app.use('/admin', admin);
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
+
 
 app.put("/user/:id", auth, (req, res) => {
     const condition = {
@@ -75,11 +79,10 @@ app.put("/user/:id", auth, (req, res) => {
         .catch(err => next(err));
 });
 
-app.get('/user/:id', auth, async (req, res) => {
-    const user = await User.findById(req.params.id);
-    // const user = await User.findByIdAndRemove(req.params.id);
-    // if (!user) return res.status(404).send("Cannot find user");
-    res.send(user);
+app.delete('/user/:id', auth, async (req, res) => {
+    const user = await User.findByIdAndRemove(req.params.id);
+    if (!user) return res.status(404).send("Cannot find user");
+    res.redirect("/admin");
 });
 
 //PORT listening
