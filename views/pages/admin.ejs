@@ -14,12 +14,12 @@
                 </h2>
                 <h3>Users in our database:</h3>
             </div>
-            <div class="user-List">
-                <ul>
+            <div lass="list-container">
+                <ul class="user-List">
                     <% for (let i = 0; i < userList.length; i++) { %>
-                    <li> <%= userList[i].name %> </%=>
-                        <form action="/user/<%= userList[i]._id %>?_method=PUT" method="POST">
-                            <input type="text" id="name" name="name" placeholder="name" />
+                    <li class="user-list-item"> <%= userList[i].name %> </%=>
+                        <form class="edit-form" action="/user/<%= userList[i]._id %>?_method=PUT" method="POST">
+                            <input type="text" id="name" name="name" placeholder="new name" />
                             <button type="submit" class="btn-user">Edit</button>
                         </form>
                         <% if (`${userList[i]._id}` !== userId) { %>
@@ -28,8 +28,8 @@
                             </form>
                        <% } %>
                     <% } %>
-                </ul>
-            </div>
+                </ul class="user-List>
+            </div c>
             <a href="/logout"><button>Log out</button></a>
         </div>
         </div>
