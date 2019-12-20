@@ -3,7 +3,7 @@ const router = express.Router();
 const Joi = require("joi");
 const auth = require('../middleware/auth');
 
-const User = require('./models/user-model');
+const User = require('../models/user-model');
 
 
 router.put("/:id", auth, async (req, res) => {
