@@ -12,7 +12,6 @@ async function auth(req, res, next) {
             id: decrypt._id,
             name: decrypt.name,
         };
-        console.log(`auth id: ${req.user.id}`)
         next();
         } catch (err) {
             return res.status(500).json(err.toString());
