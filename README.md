@@ -12,12 +12,12 @@ This is a simple login and registration application in Node.js, Express and Mong
     Create your .env file
     Create a .env file in the root of your project and insert your key/value pairs in the following format of KEY=VALUE:
 
-    DB_CONNECTION='add your DB connection here'
-    CLIENT_ID='add your client secret here'
-    CLIENT_KEY='add your client ID here'
-    COOKIE_KEY='add your cookie here'
+        DB_CONNECTION=add your DB connection here
+        CLIENT_ID=add your client ID here
+        CLIENT_KEY=add your client secret/key here
+        COOKIE_KEY=add your cookie here
 
-    Start the server.
+    Start the server
     npm start
 
     Open a web browser and navigate to http://localhost:8000/
